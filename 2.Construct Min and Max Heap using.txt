@@ -1,0 +1,29 @@
+2.Construct Min and Max Heap using arrays, delete any element and display the
+content of the Heap.
+import heapq
+min_heap = []
+max_heap = []
+elements = [40, 10, 30, 50, 20]
+print("Inserting elements:", elements)
+for e in elements:
+ heapq.heappush(min_heap, e)
+ heapq.heappush(max_heap, -e)
+print("Min Heap:", min_heap)
+print("Max Heap:", [-x for x in max_heap])
+val = 30
+print(f"\nDeleting {val}...")
+if val in min_heap:
+ min_heap.remove(val)
+ heapq.heapify(min_heap)
+if -val in max_heap:
+ max_heap.remove(-val)
+ heapq.heapify(max_heap)
+print("Min Heap after deletion:", min_heap)
+print("Max Heap after deletion:", [-x for x in max_heap])
+output:
+Inserting elements: [40, 10, 30, 50, 20]
+Min Heap: [10, 20, 30, 50, 40]
+Max Heap: [50, 40, 30, 10, 20]
+Deleting 30...
+Min Heap after deletion: [10, 20, 50, 40]
+Max Heap after deletion: [50, 40, 10, 20]

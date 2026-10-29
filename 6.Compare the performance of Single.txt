@@ -1,0 +1,56 @@
+6.Compare the performance of Single Source Shortest Paths using Greedy method
+when the graph is represented by adjacency matrix and adjacency lists.
+import heapq
+matrix = [
+ [0, 2, 0, 6, 0],
+ [2, 0, 3, 8, 5],
+ [0, 3, 0, 0, 7],
+ [6, 8, 0, 0, 9],
+ [0, 5, 7, 9, 0]
+]
+alist = [
+ [(1, 2), (3, 6)],
+ [(0, 2), (2, 3), (4, 5)],
+ [(1, 3), (4, 7)],
+ [(0, 6), (1, 8), (4, 9)],
+ [(1, 5), (2, 7), (3, 9)]
+]
+def dijkstra_matrix(graph, src):
+ n = len(graph)
+ dist = [float('inf')] * n
+ dist[src] = 0
+ pq = [(0, src)]
+ while pq:
+ current_dist, u = heapq.heappop(pq)
+ if current_dist > dist[u]:
+ continue
+ for v, weight in enumerate(graph[u]):
+ if weight != 0:
+ if dist[u] + weight < dist[v]:
+ dist[v] = dist[u] + weight
+ heapq.heappush(pq, (dist[v], v))
+ return dist
+def dijkstra_list(graph, src):
+ n = len(graph)
+ dist = [float('inf')] * n
+ dist[src] = 0
+ pq = [(0, src)]
+ while pq:
+ current_dist, u = heapq.heappop(pq)
+ if current_dist > dist[u]:
+ continue
+ for v, w in graph[u]:
+ if dist[u] + w < dist[v]:
+ dist[v] = dist[u] + w
+ heapq.heappush(pq, (dist[v], v))
+ return dist
+source_node = 0
+print(f"shortest distamces from node {source_node}:")
+dist_matrix = dijkstra_matrix(matrix, source_node)
+print("Adjacency Matrix distances:", dist_matrix)
+dist_list = dijkstra_list(alist, source_node)
+print("Adjacency List distances:", dist_list)
+output:
+shortest distamces from node 0:
+Adjacency Matrix distances: [0, 2, 5, 6, 7]
+Adjacency List distances: [0, 2, 5, 6, 7]
